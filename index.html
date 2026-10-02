@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semester 5 Grade Calculator</title>
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --card: #ffffff;
+      --text: #1b1f24;
+      --muted: #5f6b7a;
+      --border: #d9dee5;
+      --accent: #2456c4;
+      --ok: #17743a;
+      --ok-bg: #e3f4e8;
+      --ko: #b3261e;
+      --ko-bg: #fce8e6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #14171b;
+        --card: #1e2329;
+        --text: #e8ebef;
+        --muted: #9aa5b3;
+        --border: #343b45;
+        --accent: #7ea6ff;
+        --ok: #6fd692;
+        --ok-bg: #173323;
+        --ko: #ff8a80;
+        --ko-bg: #3d1b19;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.4;
+    }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px 48px; }
+    .summary {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--bg);
+      padding: 16px 0 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    h1 { font-size: 1rem; font-weight: 600; margin: 0 0 4px; color: var(--muted); }
+    .total { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 12px; }
+    .total .avg { font-size: 2.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .total .out-of { font-size: 1.25rem; color: var(--muted); }
+    .summary-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; }
+    #progress { color: var(--muted); font-size: 0.9rem; }
+    .status { font-size: 0.8rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+    .status:empty { display: none; }
+    .status.ok { color: var(--ok); background: var(--ok-bg); }
+    .status.ko { color: var(--ko); background: var(--ko-bg); }
+    button {
+      font: inherit;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+    button:hover { border-color: var(--accent); }
+    .ue {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .ue-head, .subject-head {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px 10px;
+    }
+    .ue-head h2 { font-size: 1.15rem; margin: 0; }
+    .subject-head h3 { font-size: 1rem; margin: 0; font-weight: 600; }
+    .coef { color: var(--muted); font-size: 0.85rem; }
+    .result { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .result .avg { font-weight: 700; font-variant-numeric: tabular-nums; }
+    .ue-head .result .avg { font-size: 1.15rem; }
+    .subject { border-top: 1px solid var(--border); margin-top: 14px; padding-top: 14px; }
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .field label { display: block; font-size: 0.85rem; margin-bottom: 4px; }
+    .field input {
+      width: 100%;
+      font: inherit;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+    .field input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .field input.invalid { border-color: var(--ko); background: var(--ko-bg); }
+    .error { display: block; color: var(--ko); font-size: 0.8rem; margin-top: 4px; }
+    .error[hidden] { display: none; }
+    .note { color: var(--muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="summary">
+      <h1>Licence 3 Computer Sciences (UFAZ) — Semester 5 average</h1>
+      <div class="total" aria-live="polite">
+        <span class="avg" id="avg-semester">—</span>
+        <span class="out-of">/ 20</span>
+        <span class="status" id="status-semester"></span>
+      </div>
+      <div class="summary-foot">
+        <span id="progress"></span>
+        <button type="button" id="reset">Reset</button>
+      </div>
+    </header>
+
+    <main id="ues"></main>
+
+    <p class="note">
+      Enter each grade out of 20. Empty fields are ignored, so the average
+      reflects only the grades entered so far. Coefficients are from the
+      2026–2027 study regulations.
+    </p>
+  </div>
+
+  <script src="grades.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

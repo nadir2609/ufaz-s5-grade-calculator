@@ -1,0 +1,4 @@
+# The regulations PDF is the source of the coefficients; it is not needed by the site.
+*.pdf
+# Local planning notes.
+docs/
